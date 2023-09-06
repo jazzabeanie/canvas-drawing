@@ -1,0 +1,41 @@
+<html>
+  <script>
+    const draw = () => {
+      var canvas = document.querySelector('canvas');
+      var context = canvas.getContext('2d');
+
+      const gridX = 5;
+      const gridY = 5;
+
+      const gridXArray = Array.from(Array(gridX), (_, i) => i)
+      const gridYArray = Array.from(Array(gridY), (_, i) => i)
+      
+      console.log(`gridXArray: ${gridXArray}`)
+      console.log(`gridYArray: ${gridYArray}`)
+
+      const xOffset = 100
+      const yOffset = 100
+      const width = 100
+      const height = 100
+
+      gridXArray.forEach((_, xIndex) => {
+        console.log(`xIndex: ${xIndex}`)
+        gridYArray.forEach((_, yIndex) => {
+          console.log(`  yIndex: ${yIndex}`)
+          context.fillStyle = `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
+          context.fillRect(xOffset*xIndex, yOffset*yIndex, width, height);
+          context.fillStyle = `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
+          context.beginPath();
+          context.arc(xOffset*xIndex+width/2, yOffset*yIndex+height/2, 30, 0, 2*Math.PI);
+          context.fill();
+        })
+      })
+    }
+    window.addEventListener('load', draw);
+  </script>
+  <body>
+    <canvas width="600" height="600">
+      Some canvas to play with
+    </canvas>
+  </body>
+</html>

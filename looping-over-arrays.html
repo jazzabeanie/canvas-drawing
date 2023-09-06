@@ -12,9 +12,14 @@
       // context.fillStyle = "rgba(0, 200, 0, 0.75)";
       // context.fillRect(100, 100, 100, 100);
 
+      const xOffset = 50
+      const yOffset = 50
+      const width = 100
+      const height = 100
+
       Array.from(Array(5), (_, index) => {
         context.fillStyle = `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.random()})`;
-        context.fillRect(100*index, 100*index, 100, 100);
+        context.fillRect(xOffset*index, yOffset*index, width, height);
       });
     }
     window.addEventListener('load', draw);
