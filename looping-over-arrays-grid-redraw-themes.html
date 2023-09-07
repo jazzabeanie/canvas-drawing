@@ -1,0 +1,89 @@
+<html>
+  <script>
+    // Define an array of color themes
+    const colorThemes = [
+      // Inspired by Nord
+      ["#569CD6", "#C586C0", "#4EC9B0", "#DCDCAA", "#83A598", "#61AFEF", "#D16969", "#E06C75", "#98C379", "#61AFEF"],
+      // Inspired by Dracula
+      ["#1E222A", "#ABB2BF", "#61AFEF", "#E06C75", "#D19A66", "#C678DD", "#E5C07B", "#98C379", "#56B6C2", "#ABB2BF"],
+      // Inspired by Gruvbox
+      ["#282C34", "#E5C07B", "#E06C75", "#61AFEF", "#98C379", "#61AFEF", "#C678DD", "#D19A66", "#56B6C2", "#ABB2BF"],
+      // Inspired by One Dark
+      ["#212121", "#61AFEF", "#98C379", "#E06C75", "#D19A66", "#ABB2BF", "#61AFEF", "#C678DD", "#E5C07B", "#56B6C2"],
+      // Inspired by Ayu Mirage
+      ["#3E4452", "#D19A66", "#61AFEF", "#E06C75", "#ABB2BF", "#61AFEF", "#C678DD", "#98C379", "#E5C07B", "#56B6C2"],
+      // Inspired by Night Owl
+      ["#2E323C", "#C678DD", "#98C379", "#E06C75", "#61AFEF", "#D19A66", "#56B6C2", "#ABB2BF", "#E5C07B", "#61AFEF"],
+      // Inspired by Monokai
+      ["#33353E", "#98C379", "#E06C75", "#C678DD", "#61AFEF", "#E5C07B", "#D19A66", "#56B6C2", "#ABB2BF", "#61AFEF"],
+      // Inspired by Spacegray
+      ["#1A1B26", "#C678DD", "#E06C75", "#D19A66", "#E5C07B", "#56B6C2", "#61AFEF", "#98C379", "#ABB2BF", "#61AFEF"],
+      // Inspired by Solarized
+      ["#161821", "#D19A66", "#E5C07B", "#56B6C2", "#C678DD", "#61AFEF", "#98C379", "#E06C75", "#ABB2BF", "#61AFEF"],
+      // Inspired by Onedark (VS Code default dark theme)
+      ["#23272F", "#E06C75", "#D19A66", "#61AFEF", "#C678DD", "#98C379", "#56B6C2", "#ABB2BF", "#E5C07B", "#61AFEF"]
+    ];
+
+    const draw = () => {
+      var canvas = document.querySelector('canvas');
+      var context = canvas.getContext('2d');
+
+      const gridX = 5;
+      const gridY = 5;
+
+      const gridXArray = Array.from(Array(gridX), (_, i) => i);
+      const gridYArray = Array.from(Array(gridY), (_, i) => i);
+
+      const xOffset = 100;
+      const yOffset = 100;
+      const width = 100;
+      const height = 100;
+
+      // Randomly select a color theme
+      const randomThemeIndex = Math.floor(Math.random() * colorThemes.length);
+      const selectedTheme = colorThemes[randomThemeIndex];
+
+      gridXArray.forEach((_, xIndex) => {
+        gridYArray.forEach((_, yIndex) => {
+          // Randomly select a color from the chosen theme for the square
+          const randomSquareColorIndex = Math.floor(Math.random() * selectedTheme.length);
+          context.fillStyle = selectedTheme[randomSquareColorIndex];
+          context.fillRect(xOffset * xIndex, yOffset * yIndex, width, height);
+
+          // Randomly select a different color from the same theme for the arc
+          let randomArcColorIndex;
+          do {
+            randomArcColorIndex = Math.floor(Math.random() * selectedTheme.length);
+          } while (randomArcColorIndex === randomSquareColorIndex);
+
+          context.fillStyle = selectedTheme[randomArcColorIndex];
+          context.beginPath();
+          context.arc(xOffset * xIndex + width / 2, yOffset * yIndex + height / 2, 30, 0, 2 * Math.PI);
+          context.fill();
+        });
+      });
+    }
+
+    window.addEventListener('load', draw);
+
+    var refreshID;
+    redraw = () => {
+      clearInterval(refreshID);
+      if (Math.random() < 0.5) {
+        console.log("redrawing once")
+        draw();
+      } else {
+        const redrawInterval = Math.random()*600+300
+        console.log("redrawing randomly (interval: " + redrawInterval + ")")
+        refreshID = setInterval(draw, redrawInterval);
+      }
+    }
+
+    setInterval(redraw, 1000);
+  </script>
+  <body>
+    <canvas width="600" height="600">
+      Some canvas to play with
+    </canvas>
+  </body>
+</html>

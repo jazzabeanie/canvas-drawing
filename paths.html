@@ -1,0 +1,45 @@
+<html>
+  <script>
+  let variation = 0;
+    const draw = () => {
+      var canvas = document.getElementById('main_canvas');
+      var context = canvas.getContext('2d');
+      context.fillStyle = '#3355ff';
+      
+      const startX = 50
+      const startY = 50
+      // const variation = Math.random() * 60 - 30;
+      console.log(`variation: ${variation}`);
+      variation = variation + Math.random() * 6 - 3
+      console.log(`variation after random ness: ${variation}`);
+      if (variation < -50) {
+        variation = -50
+      } else if (variation > 50) {
+        variation = 50
+      }
+      console.log(`variation after bounds: ${variation}`);
+
+      context.clearRect(0, 0, 600, 600);
+      context.beginPath();
+      context.moveTo(startX, startY);
+      context.lineTo(startX + 100, startY);
+      context.lineTo(startX + 50 - variation, startY + 50 - variation);
+      context.lineTo(startX, startY + 100);
+      context.fill();
+    }
+    window.addEventListener('load', draw);
+
+    redraw = () => {
+      console.log("redrawing")
+      // clearInterval(refreshID);
+      draw()
+    }
+    const refreshID = setInterval(redraw, 50);
+    console.log(`created refreshID: ${refreshID}`);
+  </script>
+  <body>
+    <canvas id="main_canvas" width="600" height="600">
+      Some canvas to play with
+    </canvas>
+  </body>
+</html>
