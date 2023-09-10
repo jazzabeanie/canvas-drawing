@@ -1,0 +1,45 @@
+<html>
+  <script>
+    const draw = () => {
+      var canvas = document.querySelector('canvas');
+      var context = canvas.getContext('2d');
+      
+      const xOffset = 10
+      const yOffset = 10
+      const width = 100
+      const height = 100
+
+      const squares = Array.from(Array(5))
+
+      console.log(squares)
+      console.log(typeof [1, 2])
+      console.log(Array.isArray(squares))
+
+      // const a = [1, 2, 3]
+
+      console.log('%')
+      console.log(2%2)
+      console.log(1%2)
+
+      squares.forEach((_, x) => {
+        squares.forEach((_, y) => {
+          // console.log(`x, y = ${x}, ${y}`)
+          if (x % 2 === 1 && y % 2 === 1) {
+            context.lineWidth = 5;
+          } else {
+            context.lineWidth = 1;
+          }
+          context.beginPath()
+          context.rect(xOffset+x*width+x*xOffset, yOffset+y*height+y*yOffset, width, height)
+          context.stroke()
+        })
+      })
+    }
+    window.addEventListener('load', draw);
+  </script>
+  <body>
+    <canvas width="600" height="600">
+      Some canvas to play with
+    </canvas>
+  </body>
+</html>
