@@ -1,0 +1,37 @@
+<html>
+<script>
+  const draw = () => {
+    canvas = document.getElementById('main_canvas');
+    context = canvas.getContext('2d');
+    const drawNote = (noteValue, xOffset, yOffset) => {
+      if (noteValue === 1) {
+        context.lineWidth = 2;
+      } else {
+        context.lineWidth = 1;
+      }
+      context.strokeRect(xOffset+localInset, yOffset+localInset, 100-2*localInset, 100-2*localInset);
+    }
+    context.lineWidth = 1;
+    const globalInset = 1;
+    const localInset = 10;
+    const squareWidth = 100;
+    const pattern = [
+      [1, 0, 0, 1, 0, 0],
+      [1, 0, 1, 0, 1, 0]
+    ]
+    pattern.forEach((row, rowIndex) => {
+      row.forEach((noteValue, columnIndex) => {
+        xOffset = globalInset+squareWidth*columnIndex
+        yOffset = globalInset+squareWidth*rowIndex
+        context.clearRect(xOffset, yOffset, squareWidth, squareWidth);
+        drawNote(noteValue, xOffset, yOffset);
+      })
+    })
+  }
+  window.addEventListener('load', draw);
+</script
+  <body>
+    <canvas id="main_canvas" width="700" height="600">
+    </canvas>
+  </body>
+</html
