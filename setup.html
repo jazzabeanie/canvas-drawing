@@ -1,0 +1,74 @@
+<html>
+<script>
+  function Person(name) {
+    this.name = name;
+  }
+
+  Person.prototype.greet = function() {
+    console.log(`Hello, my name is ${this.name}`);
+  };
+
+  const alice = new Person('Alice');
+  alice.greet(); // Hello, my name is Alice
+  
+  function Space(map) {
+      this.map = map;
+  }
+  
+  Space.prototype.create = (func) => {
+    console.log(`this.map = ${this.map}`)  // FIXME: why this no work?
+    if (this.map.square) {
+      console.log(`draw from top left corner ${this.map.square.x}, ${this.map.square.y}, with width = ${this.map.square.width} and height = ${this.map.square.height}`)
+      console.log("TODO: call func with parameters")
+    } else if (this.this.map.circle) {
+      console.log(`draw from center point ${this.map.cirlce.x}, ${this.map.cirlce.y}`)
+      console.log("TODO: call func with parameters")
+    }
+  }
+
+  someFunc = () => {
+    console.log("some function")
+  }
+
+  const draw = () => {
+    canvas = document.getElementById('main_canvas');
+    context = canvas.getContext('2d');
+    context.lineWidth = 1;
+    const globalInset = 1;
+    const innerAngle = 120;
+    const externalTriangleAccuteAngle = 90 - (innerAngle/2)
+    const externalTriangleAccuteAngleRad = externalTriangleAccuteAngle*Math.PI/180
+    const width = 100;
+    const xPoint = width/2;
+    const yPoint = xPoint * Math.tan(externalTriangleAccuteAngleRad)
+    const side = yPoint / Math.sin(externalTriangleAccuteAngleRad)
+    console.log(`side: ${side}`)
+    context.clearRect(0, 0, 600, 600);
+    context.beginPath();
+    context.moveTo(globalInset, globalInset+yPoint); // move to top left corner
+    context.lineTo(globalInset + xPoint, globalInset);
+    context.lineTo(globalInset + 2*xPoint, globalInset+yPoint);
+    context.lineTo(globalInset + 2*xPoint, globalInset + yPoint + side);
+    context.lineTo(globalInset + xPoint, globalInset + 2*yPoint + side);
+    context.lineTo(globalInset, globalInset + yPoint + side);
+    context.lineTo(globalInset, globalInset+yPoint);
+    context.stroke();
+    const wholeSpace = new Space({
+      square: {
+        x: 0,
+        y: 0,
+        width: 600,
+        height: 700
+      }
+    })
+
+    wholeSpace.create(someFunc)
+
+  }
+  window.addEventListener('load', draw);
+</script
+  <body>
+    <canvas id="main_canvas" width="700" height="600">
+    </canvas>
+  </body>
+</html
