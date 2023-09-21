@@ -10,14 +10,50 @@ const sketch = () => {
     context.fillRect(0, 0, width, height);
     
     context.fillStyle = "black";
-    
+
     const fillTopLeft = (x, y, w, h) => {
-      context.fillRect(x, y, w, h);
+      context.fillRect(x, y, w/2, h/2);
+    }
+    
+    const fillCenter = (x, y, w, h) => {
+      const fraction = 0.5
+      context.fillRect(
+        x + w/2 - w*fraction/2,  // + w/2 gets us to the center, then subtract half the width
+        y + h/2 - h*fraction/2, 
+        w*fraction, 
+        h*fraction
+      );
     }
     
     function Space(map) {
         this.map = map;
     };
+    
+    Space.prototype.grid = function(x, y) {
+      // const gridArray = Array.from(Array(x * y))
+      const gridArray = []
+      console.log(`this.map = ${JSON.stringify(this.map)}`);
+      Array.from(Array(x), (_, xIndex) => {
+        console.log(`this.map = ${JSON.stringify(this.map)}`);
+        Array.from(Array(y), (_, yIndex) => {
+          innerSpaceWidth = this.map.square.width / x;
+          innerSpaceHeight = this.map.square.height / y;
+          console.log(`TODO: create a space in ${xIndex}, ${yIndex} grid space`);
+          gridArray.push(new Space({
+            square: {
+              x: this.map.square.x + innerSpaceWidth * xIndex,
+              y: this.map.square.y + innerSpaceHeight * yIndex,
+              width: this.map.square.width / x,
+              height: this.map.square.height / y
+            }
+          }))
+        })
+      })
+      // console.log(`grid created: ${gridArray}`)
+      // console.log(`first item of gridArray: ${gridArray[0]}`)
+      return gridArray
+    }
+    
     Space.prototype.create = function(func) {
       console.log(`this.map = ${JSON.stringify(this.map)}`);
       if (this.map.square) {
@@ -28,15 +64,18 @@ const sketch = () => {
         console.log("TODO: call func with parameters")
       }
     }
-    const s = new Space({
+    const w = new Space({
       square: {
-        x: 10,
-        y: 10,
-        width: 20,
-        height: 20
+        x: 0,
+        y: 0,
+        width: width,
+        height: height
       }
     });
-    s.create(fillTopLeft)
+    const wholeGrid = w.grid(9, 9)
+    console.log(`wholeGrid = ${JSON.stringify(wholeGrid)}`);
+    wholeGrid.forEach(square => square.create(fillCenter))
+    //  w.create(fillTopLeft)
   };
 };
 
