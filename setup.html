@@ -16,7 +16,7 @@
   }
   
   Space.prototype.create = (func) => {
-    console.log(`this.map = ${this.map}`)  // FIXME: why this no work?
+    console.log(`this.map = ${this.map}`)  // FIXME: why this no work? because of the context of fat arrow functions. use normal function instead.
     if (this.map.square) {
       console.log(`draw from top left corner ${this.map.square.x}, ${this.map.square.y}, with width = ${this.map.square.width} and height = ${this.map.square.height}`)
       console.log("TODO: call func with parameters")
