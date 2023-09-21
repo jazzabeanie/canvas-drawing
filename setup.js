@@ -72,7 +72,13 @@ const sketch = () => {
         height: height
       }
     });
-    const wholeGrid = w.grid(9, 9)
+    
+    // this will make a random size grid every time the page is refreshed
+    // const dimension = Math.round(Math.random() * 20)
+    // const wholeGrid = w.grid(dimension, dimension)
+
+    const wholeGrid = w.grid(50, 100)
+    
     console.log(`wholeGrid = ${JSON.stringify(wholeGrid)}`);
     wholeGrid.forEach(square => square.create(fillCenter))
     //  w.create(fillTopLeft)
