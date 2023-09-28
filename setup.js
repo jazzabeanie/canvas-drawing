@@ -40,7 +40,7 @@ const sketch = () => {
           innerSpaceHeight = this.map.square.height / y;
           console.log(`TODO: create a space in ${xIndex}, ${yIndex} grid space`);
           gridArray.push(new Space({
-            square: {
+            square: { // TODO: change quart to 'box'
               x: this.map.square.x + innerSpaceWidth * xIndex,
               y: this.map.square.y + innerSpaceHeight * yIndex,
               width: this.map.square.width / x,
@@ -54,11 +54,11 @@ const sketch = () => {
       return gridArray
     }
     
-    Space.prototype.create = function(func) {
+    Space.prototype.create = function(func) {  // TODO: add ...args. see grid-of-rotation.js
       console.log(`this.map = ${JSON.stringify(this.map)}`);
       if (this.map.square) {
         console.log(`draw from top left corner ${this.map.square.x}, ${this.map.square.y}, with width = ${this.map.square.width} and height = ${this.map.square.height}`)
-        func(this.map.square.x, this.map.square.y, this.map.square.width, this.map.square.height)
+        func(this.map.square.x, this.map.square.y, this.map.square.width, this.map.square.height)  // TODO: add ...args. see grid-of-rotation.js
       } else if (this.map.circle) {
         console.log(`draw from center point ${this.map.cirlce.x}, ${this.map.cirlce.y}`)
         console.log("TODO: call func with parameters")
