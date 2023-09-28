@@ -9,8 +9,8 @@ var scale = 0
 const refreshRate = 100
 
 const draw = (context, width, height) => {
-  scale += 0.03
-  
+  scale += 0.0001
+
   function Space(map) {
       this.map = map;
   };
@@ -78,7 +78,7 @@ const draw = (context, width, height) => {
     }
   });
 
-  const wholeGrid = whole.grid(4, 4)
+  const wholeGrid = whole.grid(20, 20)
 
   console.log(`context = ${context}`)
   wholeGrid.forEach((square, index) => {square.create(spinningDiamond, index)})
