@@ -36,10 +36,23 @@ class Space {
     // console.log(`first item of gridArray: ${gridArray[0]}`)
     return gridArray
   }
-}
+
+  create(func, ...args) {
+    console.log(`this.map = ${JSON.stringify(this.map)}`);
+      if (this.map.box) {
+        console.log(`draw from top left corner ${this.map.box.x}, ${this.map.box.y}, with width = ${this.map.box.width} and height = ${this.map.box.height}`)
+        func(this.map.box.x, this.map.box.y, this.map.box.width, this.map.box.height, ...args)
+      } else if (this.map.circle) {
+        console.log(`draw from center point ${this.map.cirlce.x}, ${this.map.cirlce.y}`)
+        console.log("TODO: call func with parameters")
+      }
+    }
+  }
 
 // const b = new Space('bla')
 // 
 // console.log(`b.map = ${b.map}`)
 
-module.exports = Space;
+module.exports = {
+  Space 
+}
