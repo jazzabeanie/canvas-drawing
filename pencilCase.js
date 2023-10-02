@@ -42,8 +42,8 @@ class Space {
       if (this.map.box) {
         console.log(`draw from top left corner ${this.map.box.x}, ${this.map.box.y}, with width = ${this.map.box.width} and height = ${this.map.box.height}`)
         func(this.map.box.x, this.map.box.y, this.map.box.width, this.map.box.height, ...args)
-      } else if (this.map.circle) {
-        console.log(`draw from center point ${this.map.cirlce.x}, ${this.map.cirlce.y}`)
+      } else if (this.map.centroid) {
+        console.log(`draw from center point ${this.map.centroid.x}, ${this.map.centroid.y}`)
         console.log("TODO: call func with parameters")
       }
     }
