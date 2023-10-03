@@ -2,7 +2,7 @@ const canvasSketch = require('canvas-sketch');
 const pencil = require("../pencilCase.js")
 
 const settings = {
-  dimensions: [ 1080, 1248 ]
+  dimensions: [ 1080, 1080 ]
 };
 
 const sketch = () => {
@@ -19,15 +19,16 @@ const sketch = () => {
       const xPoint = w/2;
       const yPoint = xPoint * Math.tan(externalTriangleAccuteAngleRad)
       const side = yPoint / Math.sin(externalTriangleAccuteAngleRad)
+      const shortSide = h - 2*yPoint
       console.log(`side: ${side}`)
       context.beginPath();
       context.moveTo(x, y+yPoint); // move to top left corner
       context.lineTo(x + xPoint, y);
       context.lineTo(x + 2*xPoint, y+yPoint);
-      context.lineTo(x + 2*xPoint, y + yPoint + side);
-      context.lineTo(x + xPoint, y + 2*yPoint + side);
-      console.log(`bottom point = ${y + 2*yPoint + side}`)
-      context.lineTo(x, y + yPoint + side);
+      context.lineTo(x + 2*xPoint, y + yPoint + shortSide);
+      context.lineTo(x + xPoint, y + h);
+      console.log(`bottom point = ${y + 2*yPoint + shortSide}`)
+      context.lineTo(x, y + yPoint + shortSide);
       context.lineTo(x, y+yPoint);
       context.stroke();
     }
@@ -40,10 +41,10 @@ const sketch = () => {
         height: height
       }
     });
-    whole.create(hexagon)
-    // const wholeGrid = whole.grid(2, 2)
+    // whole.create(hexagon)
+    const wholeGrid = whole.grid(3, 3)
     // console.log(`wholeGrid = ${JSON.stringify(wholeGrid)}`);
-    // wholeGrid.forEach(square => square.create(hexagon))
+    wholeGrid.forEach(square => square.create(hexagon))
   };
 };
 
