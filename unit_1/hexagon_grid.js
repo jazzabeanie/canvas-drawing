@@ -42,8 +42,9 @@ const sketch = () => {
       }
     });
     // whole.create(hexagon)
-    const wholeGrid = whole.grid(3, 3)
-    // console.log(`wholeGrid = ${JSON.stringify(wholeGrid)}`);
+    const wholeGrid = whole.grid(20, 20)
+    console.log(`wholeGrid = ${JSON.stringify(wholeGrid)}`);
+    pencil.hexagonise(wholeGrid)
     wholeGrid.forEach(square => square.create(hexagon))
   };
 };

@@ -1,3 +1,24 @@
+const hexagonise = (gridArray) => {
+  // Assume that the hexagon has it's points virtically, not horizontally and that the flat sides are squished to fit it in the space (ie, angle is always 120 degrees)
+  gridArray.forEach(space => {
+    const xPoint = space.map.box.width / 2
+    const innerAngle = 120;
+    const externalTriangleAccuteAngle = 90 - (innerAngle/2)
+    const externalTriangleAccuteAngleRad = externalTriangleAccuteAngle*Math.PI/180
+    const yPoint = xPoint * Math.tan(externalTriangleAccuteAngleRad)
+    console.log(`space = ${JSON.stringify(space)}`);
+    // TODO: offset the row by the row number times the y offset value
+    space.map.box.y += -yPoint * space.map.box.row
+    console.log(`new space.map.box.y = ${space.map.box.y}`);
+    if (space.map.box.row % 2 != 0) {
+      // TODO: row nubmer is odd, therefor also offset by the x avlue
+      space.map.box.x += xPoint
+      console.log(`new space.map.box.x = ${space.map.box.x}`);
+    }
+  })
+}
+
+
 class Space {
   constructor(map){
     this.map = map
@@ -14,20 +35,21 @@ class Space {
 
   grid(x, y) {
     // const gridArray = Array.from(Array(x * y))
-    const gridArray = []
+    const gridArray = [] // TODO: make this a custom type that extends Array, then attach the hexagonise method to this object.
     console.log(`this.map = ${JSON.stringify(this.map)}`);
     Array.from(Array(x), (_, xIndex) => {
       console.log(`this.map = ${JSON.stringify(this.map)}`);
       Array.from(Array(y), (_, yIndex) => {
         const innerSpaceWidth = this.map.box.width / x;
         const innerSpaceHeight = this.map.box.height / y;
-        console.log(`TODO: create a space in ${xIndex}, ${yIndex} grid space`);
         gridArray.push(new Space({
           box: {
             x: this.map.box.x + innerSpaceWidth * xIndex,
             y: this.map.box.y + innerSpaceHeight * yIndex,
             width: this.map.box.width / x,
-            height: this.map.box.height / y
+            height: this.map.box.height / y,
+            row: yIndex,
+            col: xIndex
           }
         }))
       })
@@ -35,6 +57,11 @@ class Space {
     // console.log(`grid created: ${gridArray}`)
     // console.log(`first item of gridArray: ${gridArray[0]}`)
     return gridArray
+  }
+
+  hexagonGrid(x, y) {
+    // TODO: figure out the offset for each row of hexagons
+    // TODO: make some assumptions about the hexagon size. See hexagon_grid.js for ideas. angle?
   }
 
   create(func, ...args) {
@@ -54,5 +81,6 @@ class Space {
 // console.log(`b.map = ${b.map}`)
 
 module.exports = {
-  Space 
+  Space,
+  hexagonise
 }
