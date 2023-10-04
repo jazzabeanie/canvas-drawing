@@ -1,11 +1,17 @@
+const hexInnerAngle = 120;
+const hexExternalTriangleAccuteAngle = 90 - (hexInnerAngle/2)
+const hexExternalTriangleAccuteAngleRad = hexExternalTriangleAccuteAngle*Math.PI/180
+    
 const hexagonise = (gridArray) => {
+  const stretchFactor = 1.5
+  gridArray.forEach(space => {
+    space.map.box.height = space.map.box.height * stretchFactor
+    space.map.box.y = space.map.box.y + space.map.box.height * (stretchFactor - 1) * space.map.box.row
+  })
   // Assume that the hexagon has it's points virtically, not horizontally and that the flat sides are squished to fit it in the space (ie, angle is always 120 degrees)
   gridArray.forEach(space => {
     const xPoint = space.map.box.width / 2
-    const innerAngle = 120;
-    const externalTriangleAccuteAngle = 90 - (innerAngle/2)
-    const externalTriangleAccuteAngleRad = externalTriangleAccuteAngle*Math.PI/180
-    const yPoint = xPoint * Math.tan(externalTriangleAccuteAngleRad)
+    const yPoint = xPoint * Math.tan(hexExternalTriangleAccuteAngleRad)
     console.log(`space = ${JSON.stringify(space)}`);
     // TODO: offset the row by the row number times the y offset value
     space.map.box.y += -yPoint * space.map.box.row
@@ -22,6 +28,7 @@ const hexagonise = (gridArray) => {
 class Space {
   constructor(map){
     this.map = map
+    // TODO: ensure map has x and y, width and heigh
   }
   // eg,
   // {

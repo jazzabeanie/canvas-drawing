@@ -9,9 +9,9 @@ const sketch = () => {
   return ({ context, width, height }) => {
     context.fillStyle = 'white';
     context.fillRect(0, 0, width, height);
-    
+
     context.fillStyle = "black";
-    
+
     const hexagon = (x, y, w, h) => {
       const innerAngle = 120;
       const externalTriangleAccuteAngle = 90 - (innerAngle/2)
@@ -33,6 +33,9 @@ const sketch = () => {
       context.stroke();
     }
 
+    const emptySquare = (x, y, w, h) => {
+      context.strokeRect(x, y, w, h);
+    }
     const whole = new pencil.Space({
       box: {
         x: 0,
@@ -42,10 +45,11 @@ const sketch = () => {
       }
     });
     // whole.create(hexagon)
-    const wholeGrid = whole.grid(20, 20)
+    const wholeGrid = whole.grid(9, 9)
     console.log(`wholeGrid = ${JSON.stringify(wholeGrid)}`);
     pencil.hexagonise(wholeGrid)
     wholeGrid.forEach(square => square.create(hexagon))
+    wholeGrid.forEach(square => square.create(emptySquare))
   };
 };
 
