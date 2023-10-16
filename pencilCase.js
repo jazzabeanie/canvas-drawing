@@ -3,12 +3,13 @@ const hexExternalTriangleAccuteAngle = 90 - (hexInnerAngle/2)
 const hexExternalTriangleAccuteAngleRad = hexExternalTriangleAccuteAngle*Math.PI/180
     
 const hexagonise = (gridArray) => {
-  const stretchFactor = 1.5
+  const stretchFactor = 1.4
   gridArray.forEach(space => {
-    space.map.box.height = space.map.box.height * stretchFactor
     space.map.box.y = space.map.box.y + space.map.box.height * (stretchFactor - 1) * space.map.box.row
+    space.map.box.height = space.map.box.height * stretchFactor
   })
-  // Assume that the hexagon has it's points virtically, not horizontally and that the flat sides are squished to fit it in the space (ie, angle is always 120 degrees)
+  // Assume that the hexagon has it's points virtically, not horizontally and that the flat sides 
+  // are squished to fit it in the space (ie, angle is always 120 degrees)
   gridArray.forEach(space => {
     const xPoint = space.map.box.width / 2
     const yPoint = xPoint * Math.tan(hexExternalTriangleAccuteAngleRad)

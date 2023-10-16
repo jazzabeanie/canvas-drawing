@@ -45,11 +45,11 @@ const sketch = () => {
       }
     });
     // whole.create(hexagon)
-    const wholeGrid = whole.grid(9, 9)
+    const wholeGrid = whole.grid(9, 12)
     console.log(`wholeGrid = ${JSON.stringify(wholeGrid)}`);
     pencil.hexagonise(wholeGrid)
     wholeGrid.forEach(square => square.create(hexagon))
-    wholeGrid.forEach(square => square.create(emptySquare))
+    // wholeGrid.forEach(square => square.create(emptySquare)) // for debuging purposes
   };
 };
 
