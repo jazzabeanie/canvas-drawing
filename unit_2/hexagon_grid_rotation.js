@@ -67,7 +67,7 @@ const draw = ({ context, width, height }) => {
   const stretchFactor = gridY/gridX // TODO: FIXME: how is this calculated?
   // console.log(`stretchFactor = ${stretchFactor}`)
   pencil.hexagonise(wholeGrid, 1.5)
-  wholeGrid.forEach((square, index) => {square.create(hexagon, (index+1)/1000)})
+  wholeGrid.forEach((square, index) => {square.create(hexagon, (index+1)/500)})
   // wholeGrid.forEach(square => square.create(emptySquare)) // for debuging purposes
 };
 
