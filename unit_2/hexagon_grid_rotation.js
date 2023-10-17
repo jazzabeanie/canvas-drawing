@@ -5,7 +5,7 @@ const settings = {
   dimensions: [ 1080, 1080 ]
 };
 
-const initRotation = 0.1 * Math.PI;
+const initRotation = 0
 var scale = 0
 const refreshRate = 10
 
@@ -34,6 +34,7 @@ const draw = ({ context, width, height }) => {
     context.rotate(initRotation + additionalRotation * scale);
     // context.rotate(initRotation + 1 * scale); 
 
+    context.lineWidth = (additionalRotation+0.2) * 1.5;
     context.beginPath();
     context.moveTo(-w/2, -h/2+yPoint); // move to top left corner
     context.lineTo(-w/2 + xPoint, -h/2);
@@ -59,10 +60,14 @@ const draw = ({ context, width, height }) => {
     }
   });
   // whole.create(hexagon)
-  const wholeGrid = whole.grid(18, 24)
+  const gridX = 18
+  const gridY = 24
+  const wholeGrid = whole.grid(gridX, gridY)
   // console.log(`wholeGrid = ${JSON.stringify(wholeGrid)}`);
-  pencil.hexagonise(wholeGrid)
-  wholeGrid.forEach((square, index) => {square.create(hexagon, index/1000)})
+  const stretchFactor = gridY/gridX // TODO: FIXME: how is this calculated?
+  // console.log(`stretchFactor = ${stretchFactor}`)
+  pencil.hexagonise(wholeGrid, 1.5)
+  wholeGrid.forEach((square, index) => {square.create(hexagon, (index+1)/1000)})
   // wholeGrid.forEach(square => square.create(emptySquare)) // for debuging purposes
 };
 

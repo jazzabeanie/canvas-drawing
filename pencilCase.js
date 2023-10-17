@@ -2,8 +2,7 @@ const hexInnerAngle = 120;
 const hexExternalTriangleAccuteAngle = 90 - (hexInnerAngle/2)
 const hexExternalTriangleAccuteAngleRad = hexExternalTriangleAccuteAngle*Math.PI/180
     
-const hexagonise = (gridArray) => {
-  const stretchFactor = 1.5
+const hexagonise = (gridArray, stretchFactor = 1) => {
   gridArray.forEach(space => {
     space.map.box.y = space.map.box.y + space.map.box.height * (stretchFactor - 1) * space.map.box.row
     space.map.box.height = space.map.box.height * stretchFactor
