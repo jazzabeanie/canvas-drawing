@@ -3,7 +3,7 @@ const hexExternalTriangleAccuteAngle = 90 - (hexInnerAngle/2)
 const hexExternalTriangleAccuteAngleRad = hexExternalTriangleAccuteAngle*Math.PI/180
     
 const hexagonise = (gridArray) => {
-  const stretchFactor = 1.4
+  const stretchFactor = 1.5
   gridArray.forEach(space => {
     space.map.box.y = space.map.box.y + space.map.box.height * (stretchFactor - 1) * space.map.box.row
     space.map.box.height = space.map.box.height * stretchFactor
@@ -13,14 +13,14 @@ const hexagonise = (gridArray) => {
   gridArray.forEach(space => {
     const xPoint = space.map.box.width / 2
     const yPoint = xPoint * Math.tan(hexExternalTriangleAccuteAngleRad)
-    console.log(`space = ${JSON.stringify(space)}`);
+    // console.log(`space = ${JSON.stringify(space)}`);
     // TODO: offset the row by the row number times the y offset value
     space.map.box.y += -yPoint * space.map.box.row
-    console.log(`new space.map.box.y = ${space.map.box.y}`);
+    // console.log(`new space.map.box.y = ${space.map.box.y}`);
     if (space.map.box.row % 2 != 0) {
       // TODO: row nubmer is odd, therefor also offset by the x avlue
       space.map.box.x += xPoint
-      console.log(`new space.map.box.x = ${space.map.box.x}`);
+      // console.log(`new space.map.box.x = ${space.map.box.x}`);
     }
   })
 }
@@ -44,9 +44,9 @@ class Space {
   grid(x, y) {
     // const gridArray = Array.from(Array(x * y))
     const gridArray = [] // TODO: make this a custom type that extends Array, then attach the hexagonise method to this object.
-    console.log(`this.map = ${JSON.stringify(this.map)}`);
+    // console.log(`this.map = ${JSON.stringify(this.map)}`);
     Array.from(Array(x), (_, xIndex) => {
-      console.log(`this.map = ${JSON.stringify(this.map)}`);
+      // console.log(`this.map = ${JSON.stringify(this.map)}`);
       Array.from(Array(y), (_, yIndex) => {
         const innerSpaceWidth = this.map.box.width / x;
         const innerSpaceHeight = this.map.box.height / y;
@@ -73,9 +73,9 @@ class Space {
   }
 
   create(func, ...args) {
-    console.log(`this.map = ${JSON.stringify(this.map)}`);
+    // console.log(`this.map = ${JSON.stringify(this.map)}`);
       if (this.map.box) {
-        console.log(`draw from top left corner ${this.map.box.x}, ${this.map.box.y}, with width = ${this.map.box.width} and height = ${this.map.box.height}`)
+        // console.log(`draw from top left corner ${this.map.box.x}, ${this.map.box.y}, with width = ${this.map.box.width} and height = ${this.map.box.height}`)
         func(this.map.box.x, this.map.box.y, this.map.box.width, this.map.box.height, ...args)
       } else if (this.map.centroid) {
         console.log(`draw from center point ${this.map.centroid.x}, ${this.map.centroid.y}`)
