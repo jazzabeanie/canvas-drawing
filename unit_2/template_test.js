@@ -5,6 +5,8 @@ const settings = {
   dimensions: [1080, 1080],
 };
 
+const refreshRate = 10;
+
 const draw = ({ context, width, height }) => {
   context.fillStyle = "white";
   context.fillRect(0, 0, width, height);
@@ -18,16 +20,12 @@ const draw = ({ context, width, height }) => {
     },
   });
 
-  pencil.drawHexagon(
-    context,
-    0,
-    0,
-    width,
-    height,
-    (rotation = undefined),
-    (lineWidth = undefined),
-    (buffer = 100)
-  );
+  whole.create((x, y, w, h) => {
+    context.save();
+    context.fillStyle = "black";
+    context.fillRect(x, y, w, h);
+    context.restore();
+  });
 };
 
 const sketch = () => {
