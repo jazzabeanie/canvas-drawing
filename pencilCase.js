@@ -27,6 +27,40 @@ const hexagonise = (gridArray, stretchFactor = 1) => {
   });
 };
 
+const pulsingBox = (
+  context,
+  x,
+  y,
+  w,
+  h,
+  itteration,
+  pulse = 100,
+  rotation = 0,
+  fillStyle = "black",
+  buffer = 0
+) => {
+  if (buffer > 0) {
+    x = x + buffer;
+    y = y + buffer;
+    w = w - buffer * 2;
+    h = h - buffer * 2;
+  }
+  context.save();
+  context.translate(x, y);
+  context.translate(w / 2, h / 2); // get to the center
+  context.rotate(rotation);
+  context.translate(-x, -y);
+  context.translate(-w / 2, -h / 2); // get back to corner
+  context.fillStyle = fillStyle;
+  pulseAmount = (Math.sin(toRadians(itteration)) + 1) * pulse;
+  x = x + pulseAmount;
+  y = y + pulseAmount;
+  w = w - 2 * pulseAmount;
+  h = h - 2 * pulseAmount;
+  context.fillRect(x, y, w, h);
+  context.restore();
+};
+
 const drawHexagon = (
   context,
   x,
@@ -74,6 +108,10 @@ const drawHexagon = (
   context.lineTo(-w / 2, -h / 2 + yPoint);
   context.stroke();
   context.restore();
+};
+
+const toRadians = (degrees) => {
+  return (degrees * Math.PI) / 180;
 };
 
 class Space {
@@ -133,11 +171,11 @@ class Space {
    * @param {...*} args Any additional arguments to be passed on
    */
   create(func, ...args) {
-    console.log(`this.map = ${JSON.stringify(this.map)}`);
+    // console.log(`this.map = ${JSON.stringify(this.map)}`);
     if (this.map.box) {
-      console.log(
-        `draw from top left corner ${this.map.box.x}, ${this.map.box.y}, with width = ${this.map.box.width} and height = ${this.map.box.height}`
-      );
+      // console.log(
+      //   `draw from top left corner ${this.map.box.x}, ${this.map.box.y}, with width = ${this.map.box.width} and height = ${this.map.box.height}`
+      // );
       func(
         this.map.box.x,
         this.map.box.y,
@@ -162,4 +200,6 @@ module.exports = {
   Space,
   hexagonise,
   drawHexagon,
+  pulsingBox,
+  toRadians,
 };
