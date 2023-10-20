@@ -9,46 +9,30 @@ const initRotation = 0
 var scale = 0
 const refreshRate = 10
 
+const draw2 = ({ context, width, height }) => {
+  context.fillStyle = "black";
+  console.log("fill")
+  context.fillRect(100, 100, 100, 100)
+}
+
 const draw = ({ context, width, height }) => {
   scale += 0.01
   context.fillStyle = 'white';
   context.fillRect(0, 0, width, height);
 
   context.fillStyle = "black";
+  context.strokeStyle = "black"
 
   const hexagon = (x, y, w, h, additionalRotation = 1) => {
-    const innerAngle = 120;
-    const externalTriangleAccuteAngle = 90 - (innerAngle/2)
-    const externalTriangleAccuteAngleRad = externalTriangleAccuteAngle*Math.PI/180
-    const xPoint = w/2;
-    const yPoint = xPoint * Math.tan(externalTriangleAccuteAngleRad)
-    const side = yPoint / Math.sin(externalTriangleAccuteAngleRad)
-    const shortSide = h - 2*yPoint
-    // console.log(`side: ${side}`)
-
-    context.save()
-    context.translate(x, y);
-    context.translate(w/2, h/2); // get to the center
-
-    // TOO: implement rotation on a timer like grid-of-rotation
-    context.rotate(initRotation + additionalRotation * scale);
-    // context.rotate(initRotation + 1 * scale); 
-
-    context.lineWidth = (additionalRotation+0.2) * 1.5;
-    context.beginPath();
-    context.moveTo(-w/2, -h/2+yPoint); // move to top left corner
-    context.lineTo(-w/2 + xPoint, -h/2);
-    context.lineTo(-w/2 + 2*xPoint, -h/2+yPoint);
-    context.lineTo(-w/2 + 2*xPoint, -h/2 + yPoint + shortSide);
-    context.lineTo(-w/2 + xPoint, -h/2 + h);
-    // console.log(`bottom point = ${-h/2 + 2*yPoint + shortSide}`)
-    context.lineTo(-w/2, -h/2 + yPoint + shortSide);
-    context.lineTo(-w/2, -h/2+yPoint);
-    context.stroke();
-    context.restore()
+    // lineWidth = 1 // (additionalRotation+0.2) * 1.5;
+    rotation = initRotation + additionalRotation * scale
+    lineWidth = (Math.sin(rotation)+1.25)/2
+    pencil.drawHexagon(context, x, y, w, h, rotation, lineWidth)
   }
 
   const emptySquare = (x, y, w, h) => {
+    console.log("emptySquare")
+    
     context.strokeRect(x, y, w, h);
   }
   const whole = new pencil.Space({
@@ -59,20 +43,21 @@ const draw = ({ context, width, height }) => {
       height: height
     }
   });
-  // whole.create(hexagon)
-  const gridX = 18
-  const gridY = 24
-  const wholeGrid = whole.grid(gridX, gridY)
+  const rows = 18
+  const cols = 24
+  const wholeGrid = whole.grid(rows, cols)
   // console.log(`wholeGrid = ${JSON.stringify(wholeGrid)}`);
-  const stretchFactor = gridY/gridX // TODO: FIXME: how is this calculated?
-  // console.log(`stretchFactor = ${stretchFactor}`)
-  pencil.hexagonise(wholeGrid, 1.5)
-  wholeGrid.forEach((square, index) => {square.create(hexagon, (index+1)/500)})
+  // const stretchFactor = cols/rows // TODO: FIXME: how is this calculated?
+  const stretchFactor = 1.5 // 1.5 seems to be the right value for 18 by 24.
+  console.log(`stretchFactor = ${stretchFactor}`)
+  pencil.hexagonise(wholeGrid, stretchFactor);
+  wholeGrid.forEach((square, index) => {square.create(hexagon, additionalRotation=(index+1)/200)});
   // wholeGrid.forEach(square => square.create(emptySquare)) // for debuging purposes
 };
 
 const sketch = () => {
   return ({ context, width, height }) => {
+    // draw({context, width, height});
     refreshID = setInterval(function () {
       draw({context, width, height});
     }, refreshRate);
