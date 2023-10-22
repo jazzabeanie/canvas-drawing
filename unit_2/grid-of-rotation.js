@@ -1,13 +1,14 @@
 const canvasSketch = require('canvas-sketch');
 
 const settings = {
+  name: 'rotating_squares',
   // Enable an animation loop
   animate: true,
   // Set loop duration to 3
-  // duration: 10,
+  // duration: 100,
   // Use a small size for better GIF file size
   dimensions: [ 1080, 1080 ],
-  // Optionally specify a frame rate, defaults to 30. Not really relevant for duration loops
+  // Optionally specify a frame rate, defaults to 30.
   fps: 30
 };
 
@@ -15,7 +16,8 @@ const initRotation = 0.25 * Math.PI;
 var scale = 0
 
 const draw = ( context, width, height, playhead, frame ) => {
-  scale = frame*0.0001
+  // scale = Math.PI/2 * playhead
+  scale = frame*0.0003
 
   function Space(map) {
       this.map = map;
