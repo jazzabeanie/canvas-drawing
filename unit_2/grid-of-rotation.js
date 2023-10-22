@@ -1,15 +1,21 @@
 const canvasSketch = require('canvas-sketch');
 
 const settings = {
-  dimensions: [ 1080, 1080 ]
+  // Enable an animation loop
+  animate: true,
+  // Set loop duration to 3
+  // duration: 10,
+  // Use a small size for better GIF file size
+  dimensions: [ 1080, 1080 ],
+  // Optionally specify a frame rate, defaults to 30. Not really relevant for duration loops
+  fps: 30
 };
 
 const initRotation = 0.25 * Math.PI;
 var scale = 0
-const refreshRate = 100
 
-const draw = (context, width, height) => {
-  scale += 0.0001
+const draw = ( context, width, height, playhead, frame ) => {
+  scale = frame*0.0001
 
   function Space(map) {
       this.map = map;
@@ -18,9 +24,9 @@ const draw = (context, width, height) => {
   Space.prototype.grid = function(x, y) {
     // const gridArray = Array.from(Array(x * y))
     const gridArray = []
-    console.log(`this.map = ${JSON.stringify(this.map)}`);
+    // console.log(`this.map = ${JSON.stringify(this.map)}`);
     Array.from(Array(x), (_, xIndex) => {
-      console.log(`this.map = ${JSON.stringify(this.map)}`);
+      // console.log(`this.map = ${JSON.stringify(this.map)}`);
       Array.from(Array(y), (_, yIndex) => {
         innerSpaceWidth = this.map.square.width / x;
         innerSpaceHeight = this.map.square.height / y;
@@ -40,10 +46,10 @@ const draw = (context, width, height) => {
   }
 
   Space.prototype.create = function(func, ...args) {
-    console.log(`this.map = ${JSON.stringify(this.map)}`);
+    // console.log(`this.map = ${JSON.stringify(this.map)}`);
     if (this.map.square) {
-      console.log(`context = ${context}`)
-      console.log(`draw from top left corner ${this.map.square.x}, ${this.map.square.y}, with width = ${this.map.square.width} and height = ${this.map.square.height}`)
+      // console.log(`context = ${context}`)
+      // console.log(`draw from top left corner ${this.map.square.x}, ${this.map.square.y}, with width = ${this.map.square.width} and height = ${this.map.square.height}`)
       func(this.map.square.x, this.map.square.y, this.map.square.width, this.map.square.height, ...args)
     } else if (this.map.circle) {
       console.log(`draw from center point ${this.map.cirlce.x}, ${this.map.cirlce.y}`)
@@ -80,22 +86,12 @@ const draw = (context, width, height) => {
 
   const wholeGrid = whole.grid(20, 20)
 
-  console.log(`context = ${context}`)
   wholeGrid.forEach((square, index) => {square.create(spinningDiamond, index)})
-  // wholeGrid.forEach(function (square) {
-  //   square.create(spinningDiamond)
-  // })
 };
 
 const sketch = () => {
-  return ({ context, width, height }) => {
-    refreshID = setInterval(function () {
-      draw(context, width, height);
-    }, refreshRate);
-    // draw(context, width, height);
-    // setTimeout(function () {
-    //   draw(context, width, height);
-    // }, 1000);
+  return ({ context, width, height, playhead, frame }) => {
+    draw(context, width, height, playhead, frame);
   };
 };
 
